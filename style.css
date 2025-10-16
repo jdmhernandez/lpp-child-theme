@@ -1,0 +1,122 @@
+/*
+Theme Name: Blocksy Child Theme - LPP
+Theme URI: https://creativethemes.com/blocksy/
+Template: blocksy
+Author: Jdev
+Author URI: https://creativethemes.com
+Description: Blocksy is a fast, modern WordPress theme with advanced WooCommerce support and full compatibility with the block editor. We're customizing it based on our client's wants (Lollipop Party Packages)
+Tags: accessibility-ready,blog,block-patterns,e-commerce,wide-blocks,block-styles,grid-layout,one-column,two-columns,three-columns,four-columns,right-sidebar,left-sidebar,translation-ready,custom-colors,custom-logo,custom-menu,featured-images,footer-widgets,full-width-template,theme-options,threaded-comments
+Version: 2.1.13-Initial-started-Sep18.1758238808
+Updated: 2025-09-18 23:40:08
+
+*/
+
+/* ===================================
+   Custom Footer Styles
+   =================================== */
+
+#lpp-footer {
+    background-color: #3d4a3c;
+    color: #d4c5a8;
+    padding: 60px 20px 30px;
+    font-family: 'Georgia', serif;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-logo {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.footer-logo img {
+    max-width: 200px;
+    height: auto;
+}
+
+.footer-columns {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.footer-column h3 {
+    font-family: 'Georgia', serif;
+    font-style: italic;
+    font-size: 1.3rem;
+    color: #d4c5a8;
+    margin-bottom: 20px;
+    font-weight: 400;
+}
+
+.footer-column ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-column ul li {
+    margin-bottom: 10px;
+}
+
+.footer-column ul li a {
+    color: #d4c5a8;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    font-size: 1rem;
+}
+
+.footer-column ul li a:hover {
+    color: #ffffff;
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.social-icons a {
+    width: 50px;
+    height: 50px;
+    background-color: #d4c5a8;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #3d4a3c;
+    transition: all 0.3s ease;
+}
+
+.social-icons a:hover {
+    background-color: #ffffff;
+    transform: scale(1.1);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 30px;
+    border-top: 1px solid rgba(212, 197, 168, 0.3);
+}
+
+.footer-bottom p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #d4c5a8;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .footer-columns {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    
+    .social-icons {
+        justify-content: center;
+    }
+}

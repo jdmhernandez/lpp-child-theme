@@ -65,3 +65,4 @@ If you have questions about the theme, development process, or want to contribut
 Happy coding! 🖥️✨
 
 --jdev (AHA Connect)
+![BusinessCardJustin](images/frontside.png)

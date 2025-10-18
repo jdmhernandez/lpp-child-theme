@@ -1,49 +1,78 @@
 <?php
-// Exit if accessed directly
-if ( !defined( 'ABSPATH' ) ) exit;
+/**
+ * Blocksy Child Theme Functions
+ * 
+ * Custom functionality for the Lollipops Party Packages child theme,
+ * including gallery features, custom footer, and theme enhancements.
+ */
 
-// BEGIN ENQUEUE PARENT ACTION
-// AUTO GENERATED - Do not modify or remove comment markers above or below:
+// Prevent direct access to this file
+if (!defined('ABSPATH')) {
+    exit;
+}
 
-if ( !function_exists( 'chld_thm_cfg_locale_css' ) ):
-    function chld_thm_cfg_locale_css( $uri ){
-        if ( empty( $uri ) && is_rtl() && file_exists( get_template_directory() . '/rtl.css' ) )
+/**
+ * Handle RTL stylesheet loading for the child theme
+ * Ensures proper CSS loading for right-to-left languages
+ */
+if (!function_exists('lpp_load_rtl_css')):
+    function lpp_load_rtl_css($uri) {
+        if (empty($uri) && is_rtl() && file_exists(get_template_directory() . '/rtl.css')) {
             $uri = get_template_directory_uri() . '/rtl.css';
+        }
         return $uri;
     }
 endif;
-add_filter( 'locale_stylesheet_uri', 'chld_thm_cfg_locale_css' );
-         
-if ( !function_exists( 'child_theme_configurator_css' ) ):
-    function child_theme_configurator_css() {
-        wp_enqueue_style( 'chld_thm_cfg_child', trailingslashit( get_stylesheet_directory_uri() ) . 'style.css', array( 'ct-main-styles','ct-admin-frontend-styles' ) );
+add_filter('locale_stylesheet_uri', 'lpp_load_rtl_css');
+
+/**
+ * Enqueue child theme styles
+ * Loads after parent theme styles to ensure proper CSS inheritance
+ */
+if (!function_exists('lpp_enqueue_child_styles')):
+    function lpp_enqueue_child_styles() {
+        wp_enqueue_style(
+            'lpp-child-theme',
+            trailingslashit(get_stylesheet_directory_uri()) . 'style.css',
+            array('ct-main-styles', 'ct-admin-frontend-styles')
+        );
     }
 endif;
-add_action( 'wp_enqueue_scripts', 'child_theme_configurator_css', 10 );
+add_action('wp_enqueue_scripts', 'lpp_enqueue_child_styles', 10);
 
-// END ENQUEUE PARENT ACTION
+/**
+ * Custom Footer Implementation
+ * Replaces the default Blocksy footer with our custom design
+ */
 
-// Remove Blocksy footer completely
+// Disable Blocksy's default footer functionality
 add_filter('blocksy:footer:offcanvas-drawer:enabled', '__return_false');
 add_filter('blocksy_output_footer', '__return_false');
 
-// Add custom footer to WordPress footer hook
-add_action('wp_footer', 'lpp_custom_footer_inject', 5);
+/**
+ * Initialize our custom footer
+ * Priority 5 ensures it runs before other footer hooks
+ */
+add_action('wp_footer', 'lpp_inject_custom_footer', 5);
 
-function lpp_custom_footer_inject() {
-    // Remove Blocksy's footer
+function lpp_inject_custom_footer() {
+    // Clean up any existing footer actions
     remove_all_actions('blocksy:footer:before');
     remove_all_actions('blocksy:footer');
     remove_all_actions('blocksy:footer:after');
     
-    // Hide Blocksy's footer with CSS if it still appears
+    // Ensure footer is hidden via CSS
     echo '<style>#footer[data-id="type-1"] { display: none !important; }</style>';
     
-    // Output our custom footer
-    lpp_custom_footer();
+    // Render our custom footer
+    lpp_render_custom_footer();
 }
 
-function lpp_custom_footer() {
+/**
+ * Render the custom footer HTML
+ * Includes logo, navigation links, social icons, and copyright
+ */
+function lpp_render_custom_footer() {
     ?>
     <footer id="lpp-footer">
         <div class="footer-container">
@@ -60,8 +89,16 @@ function lpp_custom_footer() {
                     <ul>
                         <li><a href="<?php echo home_url('/about'); ?>">About</a></li>
                         <li><a href="<?php echo home_url('/contact'); ?>">Contact</a></li>
-                        <li><a href="<?php echo home_url('/gallery'); ?>">Gallery</a></li>
+                        <li><a href="<?php echo site_url('/gallery-page/'); ?>">Gallery</a></li>
                         <li><a href="<?php echo home_url('/book-a-booth'); ?>">Book a Booth</a></li>
+                        
+                        <!-- Login/Logout and Gallery Links -->
+                        <?php if (is_user_logged_in()) : ?>
+                            <li><a href="<?php echo home_url('/staff-gallery/'); ?>">Staff Gallery</a></li>
+                            <li><a href="<?php echo wp_logout_url(home_url()); ?>">Logout</a></li>
+                        <?php else : ?>
+                            <li><a href="<?php echo wp_login_url(home_url()); ?>">Staff Login</a></li>
+                        <?php endif; ?>
                     </ul>
                 </div>
 
@@ -103,3 +140,106 @@ function lpp_custom_footer() {
     </footer>
     <?php
 }
+
+/**
+ * Staff Gallery Implementation
+ * Handles the custom gallery feature including image uploads,
+ * categorization, and display functionality.
+ */
+
+// Load gallery styles for authenticated users
+function lpp_enqueue_gallery_styles() {
+    if (is_user_logged_in()) {
+        wp_enqueue_style(
+            'gallery-styles', 
+            get_stylesheet_directory_uri() . '/dev-gallery/css/gallery.css', 
+            [], 
+            '1.0.0'
+        );
+    }
+}
+add_action('wp_enqueue_scripts', 'lpp_enqueue_gallery_styles');
+
+/**
+ * Initialize gallery functionality
+ * Sets up page templates, metadata handling, and image upload processing
+ */
+function lpp_gallery_setup() {
+    // Register gallery page template
+    add_filter('theme_page_templates', function($templates) {
+        $templates['page-gallery.php'] = 'Staff Gallery';
+        return $templates;
+    });
+
+    // Add category selection to Media Library items
+    add_filter('attachment_fields_to_edit', function($form_fields, $post) {
+        $field_value = get_post_meta($post->ID, 'gallery_category', true);
+        $categories = ['Baptism', 'Birthday', 'Corporate Events', 'Debut', 'Wedding', 'Photobooth'];
+        
+        $form_fields['gallery_category'] = array(
+            'label' => 'Gallery Category',
+            'input' => 'select',
+            'value' => $field_value,
+            'choices' => array_combine($categories, $categories)
+        );
+        return $form_fields;
+    }, 10, 2);
+
+    // Store category selection in image metadata
+    add_filter('attachment_fields_to_save', function($post, $attachment) {
+        if (isset($attachment['gallery_category'])) {
+            update_post_meta($post['ID'], 'gallery_category', $attachment['gallery_category']);
+        }
+        return $post;
+    }, 10, 2);
+
+    // Process image uploads and add to Media Library
+    add_action('template_redirect', function() {
+        if (is_page_template('page-gallery.php') && is_user_logged_in()) {
+            if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['gallery_image'])) {
+                // Check file type and size
+                $allowed_types = ['image/jpeg', 'image/png', 'image/gif'];
+                $max_file_size = 5 * 1024 * 1024; // 5MB
+
+                $file = $_FILES['gallery_image'];
+                
+                if (in_array($file['type'], $allowed_types) && $file['size'] <= $max_file_size) {
+                    // Upload file to WordPress Media Library
+                    $upload = wp_handle_upload($file, ['test_form' => false]);
+                    
+                    if (!isset($upload['error'])) {
+                        // Create attachment for the uploaded image
+                        $attachment = [
+                            'guid' => $upload['url'],
+                            'post_mime_type' => $upload['type'],
+                            'post_title' => sanitize_file_name($file['name']),
+                            'post_content' => '',
+                            'post_status' => 'inherit'
+                        ];
+                        
+                        $attach_id = wp_insert_attachment($attachment, $upload['file']);
+                        require_once(ABSPATH . 'wp-admin/includes/image.php');
+                        $attach_data = wp_generate_attachment_metadata($attach_id, $upload['file']);
+                        wp_update_attachment_metadata($attach_id, $attach_data);
+                        
+                        // Mark as gallery image
+                        update_post_meta($attach_id, '_gallery_upload', '1');
+                        
+                        // Prevent form resubmission
+                        wp_redirect(get_permalink());
+                        exit;
+                    }
+                }
+            }
+        }
+    });
+
+    // Load gallery styles and scripts when needed
+    add_action('wp_enqueue_scripts', function() {
+        if (is_page_template('page-gallery.php')) {
+            wp_enqueue_style('gallery-styles', get_stylesheet_directory_uri() . '/dev-gallery/css/gallery.css', [], '1.0.0');
+            wp_enqueue_script('gallery-scripts', get_stylesheet_directory_uri() . '/dev-gallery/js/gallery.js', ['jquery'], '1.0.0', true);
+        }
+    });
+}
+add_action('init', 'lpp_gallery_setup');

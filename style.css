@@ -11,13 +11,16 @@ Updated: 2025-09-18 23:40:08
 
 */
 
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+
 /* ===================================
    Custom Footer Styles
    =================================== */
 
 #lpp-footer {
     background-color: #3d4a3c;
-    color: #d4c5a8;
+    color: #CCB693;
     padding: 60px 20px 30px;
     font-family: 'Georgia', serif;
 }
@@ -25,32 +28,39 @@ Updated: 2025-09-18 23:40:08
 .footer-container {
     max-width: 1200px;
     margin: 0 auto;
-}
-
-.footer-logo {
-    text-align: center;
-    margin-bottom: 40px;
-}
-
-.footer-logo img {
-    max-width: 200px;
-    height: auto;
+    width: 100%;
 }
 
 .footer-columns {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 40px;
-    margin-bottom: 40px;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+@media (min-width: 768px) {
+    .footer-columns {
+        grid-template-columns: repeat(3, auto);
+        gap: 100px;
+        justify-content: center;
+    }
+}
+
+.footer-column {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .footer-column h3 {
-    font-family: 'Georgia', serif;
+    margin-bottom: 15px;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 25px;
     font-style: italic;
-    font-size: 1.3rem;
-    color: #d4c5a8;
-    margin-bottom: 20px;
-    font-weight: 400;
+    font-weight: 600;
+    line-height: 150%;
+    letter-spacing: -0.5px;
+    text-transform: capitalize;
+    color: #CCB693;
 }
 
 .footer-column ul {
@@ -64,37 +74,18 @@ Updated: 2025-09-18 23:40:08
 }
 
 .footer-column ul li a {
-    color: #d4c5a8;
     text-decoration: none;
-    transition: color 0.3s ease;
-    font-size: 1rem;
+    color: #D4C7BE;
+    font-family: 'Lato', sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%;
+    letter-spacing: -0.32px;
 }
 
-.footer-column ul li a:hover {
-    color: #ffffff;
-}
-
-.social-icons {
-    display: flex;
-    gap: 15px;
-    margin-top: 20px;
-}
-
-.social-icons a {
-    width: 50px;
-    height: 50px;
-    background-color: #d4c5a8;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #3d4a3c;
-    transition: all 0.3s ease;
-}
-
-.social-icons a:hover {
-    background-color: #ffffff;
-    transform: scale(1.1);
+.social-icons a svg {
+    fill: #CCB693;
 }
 
 .footer-bottom {
@@ -106,17 +97,5 @@ Updated: 2025-09-18 23:40:08
 .footer-bottom p {
     margin: 0;
     font-size: 0.9rem;
-    color: #d4c5a8;
-}
-
-/* Mobile Responsive */
-@media (max-width: 768px) {
-    .footer-columns {
-        grid-template-columns: 1fr;
-        text-align: center;
-    }
-    
-    .social-icons {
-        justify-content: center;
-    }
+    color: #CCB693;
 }

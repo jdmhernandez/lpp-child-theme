@@ -31,6 +31,12 @@ Updated: 2025-09-18 23:40:08
     width: 100%;
 }
 
+.footer-logo img {
+    width: 250px;
+    height: 250px;
+    flex-shrink: 0;
+}
+
 .footer-columns {
     display: grid;
     grid-template-columns: 1fr;
@@ -99,3 +105,73 @@ Updated: 2025-09-18 23:40:08
     font-size: 0.9rem;
     color: #CCB693;
 }
+
+    
+/* Desktop Hero Improvements */
+@media (min-width: 1000px) {
+  
+    /* Make hero taller and full-width */
+    .stk-c358997 {
+      max-width: 100% !important;
+      min-width: 100% !important;
+    }
+    
+    .stk-c358997 .stk-img-wrapper {
+      height: 700px !important;
+      --stk-gradient-overlay: 0.5 !important; /* Lighter overlay */
+    }
+    
+    /* Bigger heading on desktop */
+    .stk-572946e .stk-block-heading__text {
+      font-size: 85px !important;
+      letter-spacing: -1px !important;
+      margin-bottom: 16px !important;
+    }
+    
+    /* Bigger subtext */
+    .stk-bebfe4c .stk-block-text__text {
+      font-size: 24px !important;
+      margin-bottom: 32px !important;
+    }
+    
+    /* Better button layout */
+    .hero-banner-btns {
+      gap: 24px !important;
+    }
+    
+    .hero-banner-btns .wp-block-button {
+      min-width: 220px !important;
+    }
+    
+    .hero-banner-btns .wp-block-button__link {
+      padding: 16px 32px !important;
+      font-size: 18px !important;
+      height: 56px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+    
+    /* Add text container background */
+    .stk-98b3330-container {
+      background: rgba(53, 64, 36, 0.85) !important;
+      padding: 60px !important;
+      border-radius: 12px !important;
+      max-width: 700px !important;
+    }
+  }
+  
+  /* Keep mobile as-is */
+  @media (max-width: 689px) {
+    .stk-c358997 .stk-img-wrapper {
+      height: 400px !important;
+    }
+    
+    .hero-banner-btns {
+      flex-direction: column !important;
+    }
+    
+    .hero-banner-btns .wp-block-button {
+      width: 100% !important;
+    }
+  }

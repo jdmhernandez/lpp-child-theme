@@ -3,21 +3,43 @@
     --primary-green: #4a5d3f;
     --accent-burgundy: #8b4a5e;
     --background-cream: #f5f1e8;
+    --white: #ffffff;
     --text-dark: #333333;
     --error-red: #d32f2f;
+    --border-radius-sm: 8px;
+    --border-radius-md: 12px;
 }
 
 .staff-gallery-container {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     line-height: 1.6;
     color: var(--text-dark);
+    padding-bottom: 3rem;
 }
 
-/* Layout */
+.ct-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.staff-gallery-content .entry-title {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-dark);
+}
+
+.gallery-description {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 2rem;
+}
+
+/* Layout - Filters and Main Content */
 .gallery-layout {
     display: grid;
     gap: 2rem;
-    padding: 1rem;
+    padding: 1rem 0;
 }
 
 @media (min-width: 768px) {
@@ -26,21 +48,28 @@
     }
 }
 
-/* Sidebar */
+/* Sidebar Styling (Filters & Sort) */
 .gallery-sidebar {
-    background: var(--background-cream);
-    border-radius: 12px;
+    background: var(--white);
+    border-radius: var(--border-radius-md);
     overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.filter-section, .sort-section {
+    margin-bottom: 1rem;
 }
 
 .filter-header, .sort-header {
     background: var(--primary-green);
-    color: white;
+    color: var(--white);
     padding: 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
+    font-weight: bold;
+    font-size: 1.1rem;
 }
 
 .chevron {
@@ -52,23 +81,82 @@
 }
 
 .filter-options, .sort-options {
-    padding: 1rem;
+    padding: 0.5rem 0;
 }
 
-/* Checkboxes and Radio Buttons */
+/* Filter Checkboxes */
 .gallery-filter label, .sort-by label {
     display: flex;
     align-items: center;
-    padding: 0.5rem;
-    margin: 0.25rem 0;
+    padding: 0.75rem 1rem;
+    margin: 0;
     cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.gallery-filter label:nth-child(odd) {
+    background-color: var(--background-cream);
+}
+
+.gallery-filter label:nth-child(even) {
+    background-color: var(--white);
+}
+
+.gallery-filter label:hover, .sort-by label:hover {
+    background-color: rgba(0, 0, 0, 0.03);
 }
 
 .gallery-filter input[type="checkbox"], .sort-by input[type="radio"] {
-    margin-right: 0.5rem;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #ccc;
+    border-radius: 4px; /* for checkboxes */
+    margin-right: 0.75rem;
+    display: grid;
+    place-content: center;
+    cursor: pointer;
 }
 
-.gallery-filter input[type="checkbox"]:checked + .checkbox-text {
+.sort-by input[type="radio"] {
+    border-radius: 50%; /* for radio buttons */
+}
+
+.gallery-filter input[type="checkbox"]:checked, .sort-by input[type="radio"]:checked {
+    border-color: var(--accent-burgundy);
+    background-color: var(--accent-burgundy);
+}
+
+.gallery-filter input[type="checkbox"]:checked::before, .sort-by input[type="radio"]:checked::before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    transform: scale(1);
+    transition: 120ms transform ease-in-out;
+    box-shadow: inset 1em 1em var(--accent-burgundy);
+    /* Use a checkmark for checkboxes */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E");
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.sort-by input[type="radio"]:checked::before {
+    /* For radio buttons, just a solid circle */
+    background-image: none;
+    border-radius: 50%;
+    background-color: var(--white); /* White dot inside burgundy */
+}
+
+.checkbox-text, .radio-text {
+    color: var(--text-dark);
+}
+
+.gallery-filter input[type="checkbox"]:checked + .checkbox-text,
+.sort-by input[type="radio"]:checked + .radio-text {
     color: var(--accent-burgundy);
     font-weight: bold;
 }
@@ -76,26 +164,32 @@
 /* Results Counter */
 .results-counter {
     color: var(--error-red);
-    margin: 1rem 0;
-    font-size: 0.9rem;
+    margin: 1.5rem 0 1rem 0;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: right; /* aligns with mock-up */
 }
 
 /* Gallery Grid */
 .gallery-grid {
     display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 1.5rem;
     margin-top: 1rem;
 }
 
 .gallery-item {
-    border-radius: 12px;
+    position: relative;
+    border-radius: var(--border-radius-md);
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    aspect-ratio: 1 / 1;
 }
 
 .gallery-item img {
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: cover;
     display: block;
     transition: transform 0.3s ease;
 }
@@ -108,48 +202,153 @@
 .upload-form {
     background: var(--background-cream);
     padding: 1.5rem;
-    border-radius: 12px;
+    border-radius: var(--border-radius-md);
     margin-bottom: 2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.upload-form h2 {
+    color: var(--text-dark);
+    margin-top: 0;
+    margin-bottom: 1rem;
 }
 
 .upload-form input[type="file"] {
-    background: white;
-    padding: 0.5rem;
-    border-radius: 6px;
+    background: var(--white);
+    padding: 0.75rem;
+    border-radius: var(--border-radius-sm);
     border: 1px solid #ddd;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 1rem;
 }
 
 .upload-form button {
     background: var(--primary-green);
-    color: white;
+    color: var(--white);
     padding: 0.75rem 1.5rem;
     border: none;
-    border-radius: 6px;
+    border-radius: var(--border-radius-sm);
     cursor: pointer;
     transition: background-color 0.3s ease;
+    width: auto;
+    align-self: flex-start;
 }
 
 .upload-form button:hover {
     background: #3a4a32;
 }
 
+/* Bulk Actions */
+.gallery-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: var(--background-cream);
+    border-radius: var(--border-radius-md);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.select-all {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    color: var(--text-dark);
+    font-weight: bold;
+}
+
+.delete-button {
+    padding: 0.6rem 1.2rem;
+    background-color: var(--error-red);
+    color: var(--white);
+    border: none;
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-weight: bold;
+}
+
+.delete-button:hover:not(:disabled) {
+    background-color: #c82333;
+}
+
+.delete-button:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* Checkbox/Radio Styling Overrides */
+.image-select .checkmark, .select-all .checkmark {
+    position: relative;
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+    background-color: var(--white);
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.image-select input[type="checkbox"],
+.select-all input[type="checkbox"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin-right: 0.75rem; /* give space from text */
+    width: 20px; /* match custom checkmark size */
+    height: 20px; /* match custom checkmark size */
+    border: none; /* custom checkmark handles border */
+}
+
+.image-select input[type="checkbox"]:checked + .checkmark::after,
+.select-all input[type="checkbox"]:checked + .checkmark::after {
+    display: block;
+    content: "";
+    position: absolute;
+    left: 6px;
+    top: 2px;
+    width: 6px;
+    height: 12px;
+    border: solid var(--primary-green);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.image-select input[type="checkbox"]:checked ~ .checkmark,
+.select-all input[type="checkbox"]:checked ~ .checkmark {
+    background-color: var(--white);
+    border-color: var(--primary-green);
+}
+
 /* Call to Action */
 .gallery-cta {
     text-align: center;
     margin-top: 3rem;
-    padding: 2rem;
+    padding: 2.5rem 1.5rem;
     background: var(--background-cream);
-    border-radius: 12px;
+    border-radius: var(--border-radius-md);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.gallery-cta p {
+    font-size: 1.3rem;
+    color: var(--text-dark);
+    margin-bottom: 1.5rem;
 }
 
 .book-now-button {
     display: inline-block;
     background: var(--primary-green);
-    color: white;
-    padding: 1rem 2rem;
-    border-radius: 6px;
+    color: var(--white);
+    padding: 1rem 2.5rem;
+    border-radius: var(--border-radius-sm);
     text-decoration: none;
-    margin-top: 1rem;
+    font-weight: bold;
     transition: background-color 0.3s ease;
 }
 

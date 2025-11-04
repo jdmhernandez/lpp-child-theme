@@ -431,7 +431,24 @@ function lpp_include_gallery_functions() {
 }
 add_action('init', 'lpp_include_gallery_functions');
 
-// Party Packages 
+/**
+ * About
+ */
+function lpp_enqueue_about_styles() {
+    if (is_page_template('page-about.php')) {
+        wp_enqueue_style(
+            'about-styles', 
+            get_stylesheet_directory_uri() . '/about/about.css', 
+            [], 
+            '1.0.0'
+        );
+    }
+}
+add_action('wp_enqueue_scripts', 'lpp_enqueue_about_styles');
+
+/**
+ * Party Packages
+ */
 function lpp_enqueue_party_packages_styles() {
     if (is_page_template('page-party-packages.php')) {
         wp_enqueue_style(
@@ -444,7 +461,9 @@ function lpp_enqueue_party_packages_styles() {
 }
 add_action('wp_enqueue_scripts', 'lpp_enqueue_party_packages_styles'); 
 
-// Photobooth
+/**
+ * Photobooth
+ */
 function lpp_enqueue_photobooth_styles() {
     if (is_page_template('page-photobooth.php')) {
         wp_enqueue_style(

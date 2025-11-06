@@ -1,0 +1,85 @@
+  body {
+      font-family: "lato", sans-serif;
+      color: #3a2f24;
+      margin: 0;
+      background-color: #faf9f7;
+      line-height: 1.6;
+    }
+
+    .container {
+      padding: 20px;
+    }
+
+    h4 {
+      font-family: "lato", serif;
+      font-weight: 600;
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 14px;
+      color: #4b4034;
+      margin-bottom: 16px;
+    }
+
+    img {
+      width: 100%;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    .section {
+      background-color: #46332A;
+      padding: 16px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+
+    .section h4 {
+      font-size: 16px;
+      margin-bottom: 8px;
+      color: #CCB693;
+    }
+
+    ul {
+    color: #D4C7BE;
+      list-style: disc;
+      margin-left: 20px;
+      font-size: 14px;
+    }
+
+    li {
+      margin-bottom: 4px;
+    }
+
+    .price {
+      float: right;
+    }
+    .tax{
+        color: #000;
+    }
+
+    small {
+      font-size: 12px;
+      color: #D4C7BE;
+      display: block;
+      margin-top: 6px;
+    }
+
+    .book-btn {
+      display: block;
+      text-align: center;
+      background-color: #354024;
+      color: white;
+      padding: 10px;
+      border-radius: 6px;
+      text-decoration: none;
+      margin-top: 16px;
+    }
+
+    .book-btn:hover {
+      background-color: #4c5c2a;
+    }
+

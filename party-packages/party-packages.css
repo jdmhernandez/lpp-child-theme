@@ -56,7 +56,7 @@
 .party-packages-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 4rem;
     margin-bottom: 2rem;
 }
 
@@ -110,7 +110,7 @@
 
 .book-now {
     display: inline-block;
-    width: 30%;
+    width: 50%;
     text-align: center;
     padding: 1rem;
     background-color: #6c7a4a;

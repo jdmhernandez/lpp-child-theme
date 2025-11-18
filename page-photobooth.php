@@ -23,6 +23,7 @@ get_header();
 
         <div class="photobooth-card">
             <h4>Base</h4>
+            <p class="photobooth-price-badge">Cad $375</p>
             <p>Our base package provides you with all the basic essentials you need for your photobooth experience.</p>
             <p>What you get:</p>
                 <ul>
